@@ -66,17 +66,26 @@
     </div>
 </div>-->
 
-@section('rest_content')
-<center><h1>LET'S GET STARTED</h1><br>
+@section('content')
+<section id="services">
+
+
+ 
+ 
+ 
+                                                     
+ <center><h1>LET'S GET STARTED</h1><br>
   </center>
  <br><div class="row">
                 <div class="col-sm-6 wow fadeInLeft">
-                  <img class="img-responsive" src="{{ asset('images/investment3.jpg') }}"  alt="">
+                  <img class="img-responsive" src="investment3.jpg"  alt="">
                 </div>
 
                 <div class="col-sm-6 wow fadeInRight">
                     <h4 class="column-title"><p style="font-family:georgia,garamond,serif;" > <b>SECURE YOUR INVESTMENTS WITH US</b></p></h4>
-                    <P style="font-family:georgia,garamond,serif;"><form align="middle" method="POST" action="{{ route('login') }}">
+                    <P style="font-family:georgia,garamond,serif;">
+
+                    <form align="middle" method="POST" action="{{ route('login') }}">
                     {{ csrf_field() }}
 &nbsp;<b>EMAIL:</b>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<INPUT TYPE= "email" class="{{ $errors->has('email') ? ' has-error' : '' }}"  NAME="email" size="24" "MAXLENGTH="15"></BR></BR>
                                 @if ($errors->has('email'))

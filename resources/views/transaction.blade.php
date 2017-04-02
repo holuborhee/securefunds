@@ -37,7 +37,7 @@
 <?php $nomatch = false; ?>
 <tr>
 <td>ffd</td>
-<td>{{$match->user->getName()}}</td>
+<td><a href="#" data-toggle="modal" data-target=".modal-payment">{{$match->user->getName()}}</a></td>
 <td>{{$match->deal->category->amount}}</td>
 @if(time() > strtotime($match->expired_on))
 <td>Expired</td>
@@ -49,7 +49,7 @@
 @if($match->confirmed_on !== NULL)
 <td>Confirmed</td>
 @elseif($match->url !== NULL)
-<td><button>Confirm Payment</button></td>
+<td><button class="button button-xlarge button-rounded" data-toggle="modal" data-target=".modal-payment" @click="setData({{$match->id}})" class="btn btn-primary">Confirm Payment</button></td>
 @elseif($match->confirmed_on === NULL)
 <td>Pending</td>
 @endif

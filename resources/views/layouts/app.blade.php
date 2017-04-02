@@ -29,12 +29,8 @@
     <script src=" {{ asset('js/html5shiv.js') }} "></script>
     <script src=" {{ asset('js/respond.min.js') }} "></script>
     <![endif]-->       
-    <link rel="shortcut icon" href="images/ico/favicon.ico"> 
-    <style type="text/css">
-    .barry{background-image: url('images/investment2.jpg');
-    }
+     
     
-    </style>
     <!-- Scripts -->
     <script>
         window.Laravel = {!! json_encode([
@@ -58,7 +54,7 @@
 
                     <!-- Branding Image -->
                     <a class="navbar-brand" href="{{ url('/') }}">
-                        {{ config('app.name', 'SECURE FUNDS') }}
+                        <img src="{{asset('images/checker5.jpg')}}" width="200" height="" align="left" alt="logo">
                     </a>
                 </div>
 
@@ -71,11 +67,12 @@
                         @if (Auth::guest())
                             
                         <li class="scroll"><a href="{{ url('/') }}">HOME</a></li>
-                        <li class="scroll"><a href="#pricing">TRANSACTION</a></li>
+                        
                         <li class="scroll"><a href="#features">ABOUT US</a></li>
-                        <li class="scroll"><a href="#contact">SUPPORT</a></li>
-                        <li class="scroll"><a href="{{ route('register') }}">REGISTER</a></li>
-                        <li class="scroll"><a href="{{ route('login') }}">SIGN IN</a></li>
+                        <li class="scroll"><a href="#services">SUPPORT</a></li>
+                        <li class="scroll"><a href="{{ route('login') }}"><i class="fa fa-sign-in"></i> LOGIN</a></li>
+                        <li class="scroll"><a href="{{ route('register') }}"><i class="fa fa-edit"></i> REGISTER</a></li>
+                        
                                             
                         @else
                             <li class="scroll"><a href="{{ url('/home') }}">DASHBOARD</a></li>
@@ -105,28 +102,68 @@
         </nav>
         </header>
 <div id="app">
-<section id="testimonial">
 
-        @yield('testimonial')
+    @yield('content')
 
-</section>
-    @yield('rest_content')
 </div>
+    <section id="features">
+        <div class="container">
+            <div class="section-header">
+                <h2>TERMS AND CONDITIONS</h2> 
+<p style="font-family:georgia,garamond,serif; class="text-center wow fadeInDown">
+WELCOME!
+CHECKERS FUNDS is a peer to peer donation exchange platform. We strive on our cooperative support and constantly grow through influx of new members and on a robust system and algorithms working very well and automated. 
+Our major goal is to willingly help one another to achieve an equality platform and stop financial insecurities leaving the poor, poorer and helpless. 
+<BR>CHECKERS FUNDS is a simple 100% returns within 12hours or less to 15 days maximum platform as this can only be achieved when we are sincere to ourselves, avoid fake pop, scams, invite new members and adhere to the terms and conditions.
+REFERRAL is not compulsory as we do not intend to make vague promises but informing others will really enable the platform grow bigger and stronger to benefit us all.<br>
+CHECKERS FUNDS  demands a commitment of honesty and sincerity from its members, supporting and uplifting one another. Its principle is simple, give and receive… Provide help to someone when you are able to do so and also request to be helped when you need it. And keep on doing this cycle.
+
+ Contact us via email on contactcheckersfunds@gmail.com.
+  For URGENT issues, contact us via our support Ticket in your dashboard when you login.
+<br><br>Thanks. Support –<br>
+CHECKERSFUNDS.COM
+
+
+
+
+</p>
+            </div>
+            <div class="row">               
+                <div class="col-md-6">
+                    <div class="media service-box wow fadeInRight">
+                        <div class="imgs pull-left">
+                          
+                 </div>
+                        
+                    </div>
+                    </div>
+<div class="col-md-6">
+                    <div class="media service-box wow fadeInRight">
+                        <div class="imgs pull-left">
+                         
+                        </div>
+                       
+                    </div>
+                    </div> 
+                    </div>
+        </div>
+    </section>
+
     <footer id="footer">
         <div class="container">
             <div class="row">
                 <div class="col-sm-6"><br>
-                    &copy; 2017 all right reserved by SECUREFUNDS.com:::Legit Peer to Peer Donation Platform
+                    &copy; 2017 all right reserved by CHECKERSFUNDS.com:::Legit Peer to Peer Donation Platform
                 </div><br>
                 |TERMS OF USE | <b><abbr>PRIVACY POLICY</abbr></b>|WARNING
                 </div>
             </div>
         </div>
     </footer><!--/#footer-->
-
-    @yield('script')
     <script src=" {{ asset('js/jquery.js') }} "></script>
     <script src=" {{ asset('js/bootstrap.min.js') }} "></script>
+    @yield('script')
+    
     <script src=" {{ asset('js/owl.carousel.min.js') }} "></script>
     <script src=" {{ asset('js/mousescroll.js') }} "></script>
     <script src=" {{ asset('js/smoothscroll.js') }} "></script>

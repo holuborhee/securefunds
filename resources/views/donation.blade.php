@@ -28,15 +28,30 @@
 </thead>
 
 <tbody>
-@foreach($matches as $key => $value)
-{{dd($key)}}
+<?php $i = 1; ?>
+@foreach($matches->cursor() as $match)
 <tr>
-<td> SL# </td>
-<td> {{$match->deal->user->getName()}} </td>
+<td> {{$i++}} </td>
+<td><a data-toggle="modal" data-target=".modal-payment"> {{$match->deal->user->getName()}} </a></td>
 <td> {{$match->deal->category->amount}} </td>
-<td> {{$match->calculateExpiredOn}} </td>
-<td> Made Payment </td>
-<td> I can't pay </td>
+<td> {{$match->expired_on}} </td>
+
+@if($match->url === NULL)
+<td> <button class="button button-xlarge button-rounded" data-toggle="modal" data-target=".modal-payment" @click="setData({{$match->id}})" class="btn btn-primary">MADE PAYMENT</button> </td>
+@elseif($match->confirmed_on === NULL)
+<td> Awaiting Approval </td>
+@elseif($match->confirmed_on !== NULL)
+<td> Confirmed </td>
+@else
+<td> - </td>
+@endif
+
+
+@if($match->url === NULL)
+<td> <button class="button button-red button-xlarge button-rounded" data-toggle="modal" data-target=".modal-cant">I CANNOT MAKE PAYMENT</button> </td>
+@else
+<td> - </td>
+@endif
 </tr>
 
 

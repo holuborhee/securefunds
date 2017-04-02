@@ -19,10 +19,10 @@ h2,
 h3,
 h4,
 h5,
-h6 ,p{
+h6 ,p,ul{
   font-weight: 600;
   font-family: 'Raleway', sans-serif;
-  color: black;
+  color: white;
 }
 
 .btn btn-primary btn-sm{
@@ -32,11 +32,11 @@ h6 ,p{
 abbr{
   font-weight: 600;
   font-family: 'Raleway', sans-serif;
-  color:orange; }
+  color:black; }
   strong{
   font-weight: 600;
   font-family: 'Raleway', sans-serif;
-  color:black; }
+  color:white; }
 b{
   font-weight: 600;
   font-family: 'Raleway', sans-serif;
@@ -87,7 +87,7 @@ hr {
   left: 50%;
   margin-left: -70px;
   height: 4px;
-  background: white;
+  background: brown;
 }
 
 .btn {
@@ -318,7 +318,7 @@ color: white;
 }
 #hero-text {
   padding: 70px 0;
-  background-color: seagreen;
+  background-color: darkslategrey;
   border-bottom:2px solid #EAEAEA
 ;
   color: #fff;
@@ -349,7 +349,7 @@ color: white;
 }
 #features {
   padding: 100px 0;
-  background:seagreen;
+  background:darkslategrey;
 }
 #features .media.service-box:first-child {
   margin-top: 80px;
@@ -521,12 +521,31 @@ padding:0px;
 transition: all .2s ease-in-out;
 margin-bottom: 15px;
 }
+
 #testimonial {
-  background-image:url("investment.jpg");
+  background:brown ;
   background-size: cover;
   padding: 45px 0;
-  
+  color: #fff;
+}#132125;
+#testimonial h4 {
+  color: #fff;
+  margin-bottom: 0px;
 }
+#testimonial small {
+  display: block;
+  margin-bottom: 10px;
+  color: rgba(255, 255, 255, 0.7);
+}
+#testimonial .btns {
+  margin-top: 0px;
+}
+#carousel-testimonial a.btn.btn-primary.btn-sm {
+background: transparent;
+border: 1px solid rgba(255, 255, 255, 0.2);
+margin: 0 8px;
+}
+
 #about {
   padding: 100px 0;
 }
@@ -684,7 +703,7 @@ height:35px;
   padding: 10px;
 }
 #pricing ul.pricing li.plan-header {
-  background: #eee; 
+  background: seagreen; 
   margin: -15px -15px 10px;
   padding: 15px 15px 30px;
   border: 0;
@@ -697,7 +716,7 @@ height:35px;
   width: 100%;
   height: 116px; 
   color: #000;  
-  border-bottom: 1px dashed #696363;
+  border-bottom: 1px dashed grey;
 }
 #pricing ul.pricing li.plan-header .price-duration > span {
   display: block;
@@ -714,7 +733,7 @@ height:35px;
 #pricing ul.pricing li.plan-header .plan-name {
   margin-top: 10px;
   font-size: 24px;
-  color: #CC3069;
+  color: seagreen;
   font-weight: bold;
   line-height: 1;
   text-transform: uppercase;
@@ -788,6 +807,8 @@ text-align: center;
 list-style: none;
 padding: 0;
 margin: 0 0 12px;
+}
+#database1{
 }
 #portfolio .portfolio-filter > li a {
 display: block;

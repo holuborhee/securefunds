@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('testimonial')
+@section('content')
 
 <!--<div class="container">
     <div class="row">
@@ -78,11 +78,18 @@
 
 
 
-<center><h1>REGISTER YOUR ACCOUNT NOW</h1><br>
- <b>Already Have An Account?</b> <a href="login funds.html">Login Now</a></center><br>
+<section id="services">
+
+
+ 
+ 
+ 
+                                                     
+ <center><h1>REGISTER YOUR ACCOUNT NOW</h1><br>
+ <b>Already Have An Account?</b> <a href="{{url('/login')}}">Login Now</a></center><br>
  <div class="row">
                 <div class="col-sm-6 wow fadeInLeft">
-                  <img class="img-responsive" src="{{ asset('images/investment3.jpg') }}"  alt="">
+                  <img class="img-responsive" src="{{asset('images/investment3.jpg')}}"  alt="">
                 </div>
 
                 <div class="col-sm-6 wow fadeInRight">
@@ -98,72 +105,85 @@
                         @endforeach
                     </div>
                     @endif
-                    <form align="middle" method="POST" action="{{ route('register')}}" >
+                    <form method="POST" autocomplete="off" action="{{ route('register')}}" >
                     {{ csrf_field() }}
-<div class="form-group{{ $errors->has('first_name') ? ' has-error' : '' }}" >
-&nbsp;<b>FIRSTNAME:</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<INPUT TYPE= "TEXT"  NAME="first_name" ROW="10"  class="{{ $errors->has('first_name') ? ' has-error' : '' }}" MAXLENGTH="30" value="{{ old('first_name') }}" required></BR></BR>
-                                
-                                    @if ($errors->has('first_name'))
+
+
+<div class="row">
+
+<div class="col-md-6 form-group{{ $errors->has('first_name') ? ' has-error' : '' }}">
+<label>FIRST NAME:</label>
+<input type= "text"  name="first_name"  class="form-control input-lg {{ $errors->has('first_name') ? ' has-error' : '' }}" value="{{ old('first_name') }}" required="required">
+@if ($errors->has('first_name'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('first_name') }}</strong>
                                     </span>
-                                @endif
-                                
-
+@endif
 </div>
 
-<div class="form-group{{ $errors->has('last_name') ? ' has-error' : '' }}">
-&nbsp;<b>LASTNAME:</b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<INPUT TYPE= "TEXT" NAME="last_name"  ROW="8" MAXLENGTH="30" class="{{ $errors->has('last_name') ? ' has-error' : '' }}" value="{{ old('last_name') }}" required></BR></BR>
+<div class="col-md-6 form-group{{ $errors->has('last_name') ? ' has-error' : '' }}">
+<label>LAST NAME:</label>
+<input name="last_name" class="form-control input-lg {{ $errors->has('last_name') ? ' has-error' : '' }}" value="{{ old('last_name') }}" type="text" required="required">
                                
                                 @if ($errors->has('last_name'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('last_name') }}</strong>
                                     </span>
                                 @endif
-                                
+</div>
 
 </div>
-<div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-&nbsp;<b>EMAIL ADDRESS:</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<INPUT TYPE= "email" NAME="email" ROW="10" class="{{ $errors->has('email') ? ' has-error' : '' }}" MAXLENGTH="50"  value="{{ old('email') }}" required></br></br>
-                                @if ($errors->has('email'))
+<br />
+
+<div class="row">
+
+<div class="col-md-6 form-group{{ $errors->has('email') ? ' has-error' : '' }}">
+<label>EMAIL ADDRESS:</label>
+<input id="email" name="email" class="form-control input-lg {{ $errors->has('email') ? ' has-error' : '' }}" type="email" value="{{ old('email') }}" required="required">
+                @if ($errors->has('email'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('email') }}</strong>
                                     </span>
-                                @endif
+                @endif
+</div>
+
+<div class="col-md-6 form-group {{ $errors->has('phone') ? ' has-error' : '' }}">
+<label>PHONE NUMBER:</label>
+<input id="phone" name="phone" class="form-control input-lg {{ $errors->has('phone') ? ' has-error' : '' }}" type="text" required="required" value="{{ old('phone') }}" maxlength="15">
+                @if ($errors->has('phone'))
+                    <span class="help-block">
+                        <strong>{{ $errors->first('phone') }}</strong>
+                    </span>
+                @endif
+</div>
+
 
 </div>
-<div class="form-group{{ $errors->has('phone') ? ' has-error' : '' }}">
-&nbsp;<b>PHONE NUMBER:</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<INPUT TYPE= "TEXT" class="{{ $errors->has('phone') ? ' has-error' : '' }}" NAME="phone" ROW="10" MAXLENGTH="15" value="{{ old('phone') }}" required><br/><br/>
-                                
-                                   @if ($errors->has('phone'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('phone') }}</strong>
-                                    </span>
-                                @endif
-                                
-</div>
-<div class="form-group{{ $errors->has('bank_name') ? ' has-error' : '' }}">
-&nbsp;<b>BANK NAME:</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<INPUT TYPE= "TEXT" NAME="bank_name" ROW="10"  class="{{ $errors->has('bank_name') ? ' has-error' : '' }}" MAXLENGTH="50" value="{{ old('bank_name') }}"  required><br/><br/>
+<br /><hr />
+
+<div class="row">
+
+<div class="col-md-4 form-group{{ $errors->has('bank_name') ? ' has-error' : '' }}">
+<label>BANK NAME:</label>
+<input name="bank_name" class="form-control input-lg {{ $errors->has('bank_name') ? ' has-error' : '' }}" type="text" required="required" value="{{ old('bank_name') }}">
                                 @if ($errors->has('bank_name'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('bank_name') }}</strong>
                                     </span>
                                 @endif
-
 </div>
-
-<div class="form-group{{ $errors->has('acc_name') ? ' has-error' : '' }}">
-&nbsp;<b>ACCOUNT NAME:</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<INPUT TYPE= "TEXT" NAME="acc_name" ROW="10" class="{{ $errors->has('acc_name') ? ' has-error' : '' }}" MAXLENGTH="50"  value="{{ old('acc_name') }}" required><br/><br/>
+<div class="col-md-4 form-group{{ $errors->has('acc_name') ? ' has-error' : '' }}">
+<label>ACCOUNT NAME:</label>
+<input name="acc_name" class="form-control input-lg {{ $errors->has('acc_name') ? ' has-error' : '' }}" type="text" required="required" value="{{ old('acc_name') }}">
                                 @if ($errors->has('acc_name'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('acc_name') }}</strong>
                                     </span>
                                 @endif
-
 </div>
-
-<div class="form-group{{ $errors->has('acc_number') ? ' has-error' : '' }}">
-&nbsp;<b>ACCOUNT NUMBER:</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<INPUT TYPE= "TEXT" NAME="acc_number" ROW="10" class="{{ $errors->has('acc_number') ? ' has-error' : '' }}" MAXLENGTH="10" value="{{ old('acc_number') }}" required><br/><br/>
+<div class="col-md-4 form-group {{ $errors->has('acc_number') ? ' has-error' : '' }}">
+<label>ACCOUNT NUMBER:</label>
+<input name="acc_number" class="form-control input-lg {{ $errors->has('acc_number') ? ' has-error' : '' }}" type="text" required="required" value="{{ old('acc_number') }}">
                                 @if ($errors->has('acc_number'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('acc_number') }}</strong>
@@ -171,48 +191,67 @@
                                 @endif
 </div>
 
-<div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-&nbsp;<b>PASSWORD:</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<INPUT TYPE= "password" NAME="password" size="23" class="{{ $errors->has('password') ? ' has-error' : '' }}"  MAXLENGTH="15" required><br/><br/>
+
+</div>
+
+
+<br />
+<hr />
+<br />
+
+<div class="row">
+
+<div class="col-md-6 form-group {{ $errors->has('password') ? ' has-error' : '' }}">
+<label>PASSWORD:</label>
+<input name="password" class="form-control input-lg {{ $errors->has('password') ? ' has-error' : '' }}" type="password" required="required">
                                 @if ($errors->has('password'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('password') }}</strong>
                                     </span>
                                 @endif
 </div>
-
-<div class="form-group">
-&nbsp;<b>RE-ENTER PASSWORD:</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<INPUT TYPE= "password" NAME="password_confirmation" size="23"  MAXLENGTH="15" required><br/><br/>
+<div class="col-md-6 form-group">
+<label>RE-ENTER PASSWORD:</label>
+<input name="password_confirmation" class="form-control input-lg" type="password" required="required">
 </div>
-<div class="form-group{{ $errors->has('category') ? ' has-error' : '' }}">
-                          <label for="category" class="col-md-5 col-md-offset-1 control-label ">SELECT A PLAN:</label>
 
-                            <div class="col-md-4">
-                                
 
-                                <select class="form-control{{ $errors->has('category') ? ' has-error' : '' }}" required  name="category">
-                                @foreach(App\Category::cursor() as $cat)
-                                        <option value="{{ $cat->id }}">{{strtoupper($cat->name)}} - <b>{{$cat->amount}}</b></option>
-                                @endforeach
-                                </select>
-                            </div>
+
+</div>
+<br /><hr /><br />
+
+
+<div class="row form-group{{ $errors->has('category') ? ' has-error' : '' }}">
+
+<label for="category" class="col-md-4 control-label ">SELECT A PLAN:</label>
+
+<div class="col-md-8">
+<select name="plan" id="category" class="form-control input-lg {{ $errors->has('category') ? ' has-error' : '' }}" required="" required  name="category">
+  <option value="">PLEASE SELECT A PLAN</option>
+
+@foreach(App\Category::cursor() as $cat)
+                                        <option value="{{ $cat->id }}">{{strtoupper($cat->name)}} - <b>{{$cat->amount}} ₦</b></option>
+    @endforeach
+
+</select>
+
 
                             @if ($errors->has('category'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('category') }}</strong>
                                     </span>
                                 @endif
-                        </div>
+</div>
+</div>
 
 
+<br /><br />
 
-
-
-
-<br/><br/>
 
 &nbsp;<INPUT TYPE="checkbox" NAME="terms"  VALUE="terms" required> I HAVE READ AND AGREED WITH THE <b>TERMS OF USE, PRIVACY POLICY & WARNING</b><br>
 <br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" value="Submit" >
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<button type="submit" class="btn btn-primary">REGISTER</button>
 
 
 

@@ -28,3 +28,4 @@ Route::get('/transactions', 'HomeController@transactions');
 Route::get('/donations', 'HomeController@donations');
 
 Route::post('/paymentmade', 'HomeController@paid');
+Route::post('/cancelpayment', 'HomeController@cancelpayment');
