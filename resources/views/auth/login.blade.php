@@ -78,7 +78,7 @@
   </center>
  <br><div class="row">
                 <div class="col-sm-6 wow fadeInLeft">
-                  <img class="img-responsive" src="investment3.jpg"  alt="">
+                  <img class="img-responsive" src="{{asset('images/investment3.jpg')}}"  alt="">
                 </div>
 
                 <div class="col-sm-6 wow fadeInRight">
@@ -87,13 +87,13 @@
 
                     <form align="middle" method="POST" action="{{ route('login') }}">
                     {{ csrf_field() }}
-&nbsp;<b>EMAIL:</b>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<INPUT TYPE= "email" class="{{ $errors->has('email') ? ' has-error' : '' }}"  NAME="email" size="24" "MAXLENGTH="15"></BR></BR>
+&nbsp;<b>EMAIL:</b>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<INPUT TYPE= "email" class="{{ $errors->has('email') ? ' has-error' : '' }}"  NAME="email"></BR></BR>
                                 @if ($errors->has('email'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('email') }}</strong>
                                     </span>
                                 @endif
-&nbsp;<b>PASSWORD:</b>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<INPUT TYPE= "password" class="{{ $errors->has('password') ? ' has-error' : '' }}" NAME="password" size="24" "MAXLENGTH="7"></BR></BR>
+&nbsp;<b>PASSWORD:</b>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<INPUT TYPE= "password" class="{{ $errors->has('password') ? ' has-error' : '' }}" NAME="password"></BR></BR>
                                 @if ($errors->has('password'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('password') }}</strong>

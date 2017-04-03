@@ -25,6 +25,10 @@ h6 ,p,ul{
   color: white;
 }
 
+.jumbotron p, .jumbotron h2, .panel h4{
+  color: black !important;
+}
+
 .btn btn-primary btn-sm{
 
   background-color: brown;
@@ -36,7 +40,11 @@ abbr{
   strong{
   font-weight: 600;
   font-family: 'Raleway', sans-serif;
-  color:white; }
+  color: white;
+}
+.help-block > strong{
+  color: red;
+}
 b{
   font-weight: 600;
   font-family: 'Raleway', sans-serif;

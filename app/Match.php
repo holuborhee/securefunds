@@ -12,9 +12,13 @@ class Match extends Model
     //
 
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
     protected $guarded = [];
     public $timestamps = false;
-    public $expired_on = "";
 
 
     public static function boot()
@@ -26,9 +30,9 @@ class Match extends Model
         });
     }
 
-    public function __construct(){
-        $d = (new \DateTime($this->matched_on))->modify('+1 day');
-        $this->expired_on = $d->format('Y-m-d H:i:s');
+    public function getExpiredDate(){
+        $d = date('Y-M-d H:i:s', strtotime("{$this->matched_on} + 24 hours"));
+        return $d;
     }
 
 
@@ -59,13 +63,16 @@ class Match extends Model
     			$deal = self::getNextDeal($cat,$id);
                 $deal = $deal[0];
                 $deal = Deal::findOrFail($deal->id);
-    			$deal->matches()->create(['user_id'=>$id]);
+                /*echo "Deal id: {$deal->id}, User id: {$id}, Category Id: {$cat}";
+                exit();*/
+                $match = new Match;
+                $match->user_id = $id;
+                $match->deal_id = $deal->id;
+                $match->matched_on = $match->freshTimestamp();
+                $match->save();
+                //$user->deals()->create(['category_id'=>$cat]);
     			return true;
     		}
-            else{
-                echo "sds";
-                dd(self::getNextDeal($cat,$id));
-            }
 
     	}
 
@@ -92,7 +99,7 @@ class Match extends Model
 
 	protected static function getNextDeal($cat,$id){
 		// search for the right deal and return it
-		$query = "SELECT * FROM deals WHERE (id IN (SELECT deal_id FROM matches GROUP BY deal_id HAVING COUNT(deal_id) < 2)  OR id NOT IN (SELECT deal_id FROM matches)) AND category_id = :cat AND user_id != :user AND closed_on IS NULL ORDER BY added_on LIMIT 1";
+		$query = "SELECT * FROM deals WHERE (id IN (SELECT deal_id FROM matches GROUP BY deal_id HAVING COUNT(deal_id) < 2)  OR id NOT IN (SELECT deal_id FROM matches)) AND category_id = :cat AND user_id != :user AND closed_on IS NULL ORDER BY added_on, id LIMIT 1";
 		$res = DB::select($query, ['cat' => $cat, 'user' => $id]);
         //dd($res);
 		return $res;

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
-@section('testimonial')
-
+@section('content')
+<section id="services">
 <center><h1>MY DONATIONS</h1><br>
   </center>
  <br><div class="row">
@@ -34,7 +34,7 @@
 <td> {{$i++}} </td>
 <td><a data-toggle="modal" data-target=".modal-payment"> {{$match->deal->user->getName()}} </a></td>
 <td> {{$match->deal->category->amount}} </td>
-<td> {{$match->expired_on}} </td>
+<td> {{$match->getExpiredDate()}} </td>
 
 @if($match->url === NULL)
 <td> <button class="button button-xlarge button-rounded" data-toggle="modal" data-target=".modal-payment" @click="setData({{$match->id}})" class="btn btn-primary">MADE PAYMENT</button> </td>
@@ -67,5 +67,5 @@ YOU HAVE NOT BEEN MATCHED TO ANYONE</h2>
 @endif
 					<P style="font-family:georgia,garamond,serif;"></P></div></div>
 
-
+</section>
 @endsection

@@ -91,7 +91,7 @@ To ensure CHECKERSFUNDS LASTS a very LONG time, re-donation is compulsory in 48 
                             <li></li></abbr>
                             <li><b>₦20,000</b></li>
                             <li><b>RETURN INVESTMENT</b> </li>
-                            <li class="plan-purchase"><a class="btn btn-primary" href="{{url('/register?cat=1')}}">SIGN UP</a></li>
+                            <li class="plan-purchase"><a class="btn btn-primary" href="{{url('/register?category=1')}}">SIGN UP</a></li>
                         </ul>
                     </div>
                 </div>
@@ -118,7 +118,7 @@ To ensure CHECKERSFUNDS LASTS a very LONG time, re-donation is compulsory in 48 
                             <li></li></abbr>
                             <li><b>₦40,000</b></li>
                             <li><b>RETURN INVESTMENT</b> </li>
-                            <li class="plan-purchase"><a class="btn btn-primary" href="{{url('/register?cat=2')}}">SIGN UP</a></li>
+                            <li class="plan-purchase"><a class="btn btn-primary" href="{{url('/register?category=2')}}">SIGN UP</a></li>
                         </ul>
                     </div>
                 </div>
@@ -145,7 +145,7 @@ To ensure CHECKERSFUNDS LASTS a very LONG time, re-donation is compulsory in 48 
                             <li></li></abbr>
                             <li><b>₦100,000</b></li>
                             <li><b>RETURN INVESTMENT</b></li>
-                            <li class="plan-purchase"><a class="btn btn-primary" href="{{url('/register?cat=3')}}">SIGN UP</a></li>
+                            <li class="plan-purchase"><a class="btn btn-primary" href="{{url('/register?category=3')}}">SIGN UP</a></li>
                         </ul>
                     </div>
                 </div>
@@ -172,7 +172,7 @@ To ensure CHECKERSFUNDS LASTS a very LONG time, re-donation is compulsory in 48 
                             <li></li></abbr>
                             <li><b>₦200,000</b> </li>
                             <li><b>RETURN INVESTMENT</b></li>
-                            <li class="plan-purchase"><a class="btn btn-primary" href="{{url('/register?cat=4')}}">SIGN UP</a></li>
+                            <li class="plan-purchase"><a class="btn btn-primary" href="{{url('/register?category=4')}}">SIGN UP</a></li>
                         </ul>
                     </div>
                 </div>

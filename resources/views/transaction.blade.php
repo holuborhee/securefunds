@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
-@section('testimonial')
-
+@section('content')
+<section id="services">
 <center><h1>TRANSACTION HISTORY</h1><br>
   </center>
  <br><div class="row">
@@ -39,10 +39,10 @@
 <td>ffd</td>
 <td><a href="#" data-toggle="modal" data-target=".modal-payment">{{$match->user->getName()}}</a></td>
 <td>{{$match->deal->category->amount}}</td>
-@if(time() > strtotime($match->expired_on))
+@if(time() > strtotime($match->getExpiredDate()))
 <td>Expired</td>
 @else
-<td>{{$match->expired_on}}</td>
+<td>{{$match->getExpiredDate()}}</td>
 @endif
 
 
@@ -72,5 +72,5 @@
 @endif
 					<P style="font-family:georgia,garamond,serif;"></P></div></div>
 
-
+</section>
 @endsection

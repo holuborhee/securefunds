@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
-@section('testimonial')
+@section('content')
+<section id="services">
 <center><h1>DASHBOARD</h1><br>
   </center>
  <br><div class="row">
@@ -10,7 +11,6 @@
 
                 <div class="col-sm-6 wow fadeInRight">
                     <h4 class="column-title"><p style="font-family:georgia,garamond,serif;" > <b>PARTICIPANT </b></p></h4>
-
 @if(Auth::user()->isToDonate())
 <div class="promo promo-border promo-center bottommargin">
 <h3><span style="text-transform: uppercase;"><b>You Are Merged To Donate</b></span></h3>
@@ -25,9 +25,9 @@
     //dd($match);
 ?>
 <h4 style='color:red;'>
-<b> YOUR ACCOUNT WILL BLOCKED IN
+<b> YOUR ACCOUNT WILL BE BLOCKED IN
 <span style='color:#ff5252; text-transform: uppercase;'>
-<div id="rmv16011">{{$match->expired_on}}</div>
+<div id="rmv16011">{{$match->getExpiredDate()}}</div>
 </span>
 PAY BEFORE THIS TIME TO ENJOY DONATIONS
 </b>
@@ -66,12 +66,20 @@ PAY BEFORE THIS TIME TO ENJOY DONATIONS
 You are to recieve donation, <a href="{{url('/transactions')}}">click to go to transaction page</a> and check if you have been matched, and to perform action on the match.</p>
 </div>
 
-@elseif(Auth::user()->isActiveTransactionOrDonation())
+@elseif(Auth::user()->category_id !== NULL)
+<div class="jumbotron">
+<p>
+    System is yet to match you for a donation, check back for matching details...
+</p>
+</div>
+
+@elseif(!Auth::user()->isActiveTransactionOrDonation())
 <div class="jumbotron">
 <p>
 You have no waiting transaction or donation, Click button to recycle
 </p>
 </div>
+
 
 @endif
 
@@ -80,7 +88,7 @@ You have no waiting transaction or donation, Click button to recycle
 
 <uploadpayment :payment="payment"></uploadpayment>
 <nopayment></nopayment>
-
+</section>
 @endsection
 
 @section('script')

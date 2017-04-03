@@ -99,10 +99,6 @@
                     @if(!$errors->isEmpty())
                     <div class="alert alert-error">
                         There was an error in processing your request.
-                        
-                        @foreach($errors as $err)
-                            <p>{{ $err }}</p>
-                        @endforeach
                     </div>
                     @endif
                     <form method="POST" autocomplete="off" action="{{ route('register')}}" >
@@ -183,7 +179,7 @@
 </div>
 <div class="col-md-4 form-group {{ $errors->has('acc_number') ? ' has-error' : '' }}">
 <label>ACCOUNT NUMBER:</label>
-<input name="acc_number" class="form-control input-lg {{ $errors->has('acc_number') ? ' has-error' : '' }}" type="text" required="required" value="{{ old('acc_number') }}">
+<input name="acc_number" class="form-control input-lg {{ $errors->has('acc_number') ? ' has-error' : '' }}" type="text" maxlength="10" required="required" value="{{ old('acc_number') }}">
                                 @if ($errors->has('acc_number'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('acc_number') }}</strong>
@@ -226,9 +222,8 @@
 <label for="category" class="col-md-4 control-label ">SELECT A PLAN:</label>
 
 <div class="col-md-8">
-<select name="plan" id="category" class="form-control input-lg {{ $errors->has('category') ? ' has-error' : '' }}" required="" required  name="category">
+<select id="category" class="form-control input-lg {{ $errors->has('category') ? ' has-error' : '' }}" required  name="category">
   <option value="">PLEASE SELECT A PLAN</option>
-
 @foreach(App\Category::cursor() as $cat)
                                         <option value="{{ $cat->id }}">{{strtoupper($cat->name)}} - <b>{{$cat->amount}} ₦</b></option>
     @endforeach
