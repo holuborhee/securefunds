@@ -15,9 +15,11 @@ Route::get('/', function () {
     return view('index');
 });
 
-Route::get('/test', function () {
+/*Route::get('/test', function () {
     return view('test');
-});
+});*/
+
+//Route::get('/test', 'HomeController@test');
 
 Auth::routes();
 
@@ -29,3 +31,5 @@ Route::get('/donations', 'HomeController@donations');
 
 Route::post('/paymentmade', 'HomeController@paid');
 Route::post('/cancelpayment', 'HomeController@cancelpayment');
+
+Route::post('/userdetails', 'HomeController@getUserdetails');

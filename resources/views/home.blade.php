@@ -12,11 +12,6 @@
                 <div class="col-sm-6 wow fadeInRight">
                     <h4 class="column-title"><p style="font-family:georgia,garamond,serif;" > <b>PARTICIPANT </b></p></h4>
 @if(Auth::user()->isToDonate())
-<div class="promo promo-border promo-center bottommargin">
-<h3><span style="text-transform: uppercase;"><b>You Are Merged To Donate</b></span></h3>
-<span><b>Please Pay The Person Below To Get Paid</b></span>
-<br><br><br>
-
 <?php
     $match = Auth::user()->matches()->whereNull('confirmed_on')->first();
     //dd($match->deal->user->id);
@@ -24,6 +19,13 @@
     //dd($deal->user());
     //dd($match);
 ?>
+@if($match->url === NULL)
+<div v-if="!payment.updated" class="promo promo-border promo-center bottommargin">
+<h3><span style="text-transform: uppercase;"><b>You Are Merged To Donate</b></span></h3>
+<span><b>Please Pay The Person Below To Get Paid</b></span>
+<br><br><br>
+
+
 <h4 style='color:red;'>
 <b> YOUR ACCOUNT WILL BE BLOCKED IN
 <span style='color:#ff5252; text-transform: uppercase;'>
@@ -47,7 +49,6 @@ PAY BEFORE THIS TIME TO ENJOY DONATIONS
 <h4 style="">Account Name: <span class="text-primary">{{$match->deal->user->acc_name}}</span></h4>
 <h4 style="">Account Number: <span class="text-primary">{{$match->deal->user->acc_number}}</span></h4>
 <h4 style="">Phone Number: <span class="text-primary">{{$match->deal->user->phone}}</span></h4>
-<h4 style="">Email: <span class="text-primary">{{$match->deal->user->email}}</span></h4>
 </div>
 </div>
 
@@ -55,11 +56,23 @@ PAY BEFORE THIS TIME TO ENJOY DONATIONS
 
 <button class="button button-red button-xlarge button-rounded" data-toggle="modal" data-target=".modal-cant">I CANNOT MAKE PAYMENT</button>
 
-</div> 
+</div>
+
+<div v-else class="jumbotron">
+    <p>You donation has been accepted, it will be confirmed by the user</p>
+
+</div>
+@else
+<div class="jumbotron">
+    <p>You donation has been accepted, it will be confirmed by the user</p>
+
+</div>
+
+@endif 
 
 
 
-</div></div>
+
 @elseif(Auth::user()->isToRecieve())
 <div class="jumbotron">
 <p>
@@ -82,7 +95,7 @@ You have no waiting transaction or donation, Click button to recycle
 
 
 @endif
-
+</div></div>
 @include('component')
 
 
@@ -187,7 +200,7 @@ data() {
                 self.payment.updated = true;
                 self.payment.errors = [];
                 var data = response.data;
-                console.log('success: ' + data.success + ' su: ' + data.su);
+                console.log('success: ' + data.success);
             }, function (response) {
                 // form submission failed, pass form  errors to errors array
                 console.log(response);

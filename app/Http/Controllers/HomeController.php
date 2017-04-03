@@ -60,7 +60,7 @@ class HomeController extends Controller
     public function paid(Request $request)
     {                 
             $file = $this->base64ToImage($request->file,"temp.jpg"); //Convert base 64 to file
-            
+
             Storage::deleteDirectory('payments/'.$request->matchId); //delete directory if exists
             $mime = $this->getFileMIMEType($file); //get mime type of file
             
@@ -72,14 +72,12 @@ class HomeController extends Controller
                 $path = 'payments/'.$request->matchId . "/" . $this->generateUniquename() . ".gif";*/
             
             $path = 'payments/'.$request->matchId . "/" . $this->generateUniquename() . ".". $this->mimeToType($mime); //create a path and file name
-            $uploaded = Storage::put($path, asset($file));
-            return response()->json(['success'=>$request->matchId,'su'=>$path], 200);
+
+            $uploaded = Storage::put($path, file_get_contents($file));
+            
             if($uploaded){
 
                 $match = Match::findOrFail($request->matchId);
-            
-            $path = $request->file->store('payments/'.$request->matchId,'local');
-            return response()->json(['success'=>$request->matchId,'su'=>$request->file], 200);
         //}else
           //  return response()->json(['success'=>$request->name,'su'=>$request->file], 200);
 
@@ -143,6 +141,11 @@ class HomeController extends Controller
         return uniqid('img_');
     }
 
+
+    public function getUserdetails(Request $request){
+        return response()->json(User::findOrFail($request->userid), 200); 
+    }
+
     public function insertUsers()
     {
         
@@ -178,6 +181,27 @@ class HomeController extends Controller
                     }*/
         
         
+    }
+
+    public function test()
+    {
+       /* $i = 0;
+        foreach (User::where('id', '<=', 40)->cursor() as $user) {
+            $i++;
+            if($i<=10)
+                $cat = 1;
+            elseif($i<=20)
+                $cat = 2;
+            elseif($i<=30)
+                $cat = 3;
+            elseif($i<=40)
+                $cat = 4;
+
+            if($i == 1 OR $i == 11 OR $i == 21 OR $i === 31)
+            echo "<h2>Category {$cat}</h2>";
+            echo "<p>Name: {$user->acc_name}, Email: {$user->email}, Password: {$user->phone}</p>";
+
+        }*/
     }
 
 

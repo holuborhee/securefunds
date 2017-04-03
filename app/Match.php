@@ -17,8 +17,9 @@ class Match extends Model
      *
      * @var array
      */
-    protected $guarded = [];
+    //protected $guarded = [];
     public $timestamps = false;
+    protected $fillable = ['user_id', 'deal_id'];
 
 
     public static function boot()
@@ -65,12 +66,12 @@ class Match extends Model
                 $deal = Deal::findOrFail($deal->id);
                 /*echo "Deal id: {$deal->id}, User id: {$id}, Category Id: {$cat}";
                 exit();*/
-                $match = new Match;
+                /*$match = new Match;
                 $match->user_id = $id;
                 $match->deal_id = $deal->id;
                 $match->matched_on = $match->freshTimestamp();
-                $match->save();
-                //$user->deals()->create(['category_id'=>$cat]);
+                $match->save();*/
+                $deal->matches()->create(['user_id'=>$id]);
     			return true;
     		}
 
