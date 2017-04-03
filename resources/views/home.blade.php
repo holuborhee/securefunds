@@ -117,6 +117,11 @@ Vue.component('nopayment', {
   props: ['payment']
 });
 
+Vue.component('userdetails', {
+  template: '#userdetails-template',
+  props: ['details']
+});
+
 
 
 new Vue({
@@ -125,6 +130,7 @@ el: '#app',
 data() {
     return{
         oyashow: false,
+        details: '',
         
         payment: {
             type: '',
