@@ -103,7 +103,7 @@
 
 </form>
 <div v-else class="jumbotron">
-<img src="{{asset('images/angry.jpg')}}" class="img-responsive img-circle" />
+<img src="{{asset('images/angry.gif')}}" class="img-responsive img-circle" />
 <p>You have been deleted from the system</p>
 <a href="{{url('/')}}" class="btn btn-danger btn-lg btn-block">OKAY</a>
 </div>
