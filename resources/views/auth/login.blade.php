@@ -87,7 +87,7 @@
 
                     <form align="middle" method="POST" action="{{ route('login') }}">
                     {{ csrf_field() }}
-&nbsp;<b>EMAIL:</b>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<INPUT TYPE= "email" class="{{ $errors->has('email') ? ' has-error' : '' }}"  NAME="email"></BR></BR>
+&nbsp;<b>EMAIL:</b>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<INPUT TYPE= "email" class="{{ $errors->has('email') ? ' has-error' : '' }}" value="{{old('email')}}"  NAME="email"></BR></BR>
                                 @if ($errors->has('email'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('email') }}</strong>

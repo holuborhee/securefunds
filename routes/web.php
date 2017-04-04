@@ -33,3 +33,7 @@ Route::post('/paymentmade', 'HomeController@paid');
 Route::post('/cancelpayment', 'HomeController@cancelpayment');
 
 Route::post('/userdetails', 'HomeController@getUserdetails');
+Route::post('/cantpay', 'HomeController@performUserCantPay');
+Route::post('/paymentdetails', 'HomeController@getPaymentDetails');
+
+Route::post('/confirmpayment', 'HomeController@confirmPayment');

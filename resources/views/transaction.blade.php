@@ -37,7 +37,7 @@
 <?php $nomatch = false; ?>
 <tr>
 <td>ffd</td>
-<td><a href="#" data-toggle="modal" data-target=".modal-payment">{{$match->user->getName()}}</a></td>
+<td><a href="#" @click="userdetails({{$match->user->id}})"  data-toggle="modal" data-target=".modal-details">{{$match->user->getName()}}</a></td>
 <td>{{$match->deal->category->amount}}</td>
 @if(time() > strtotime($match->getExpiredDate()))
 <td>Expired</td>
@@ -49,7 +49,10 @@
 @if($match->confirmed_on !== NULL)
 <td>Confirmed</td>
 @elseif($match->url !== NULL)
-<td><button class="button button-xlarge button-rounded" data-toggle="modal" data-target=".modal-payment" @click="setData({{$match->id}})" class="btn btn-primary">Confirm Payment</button></td>
+<td v-if="!pdetails.confirmed"><button class="button button-xlarge button-rounded" data-toggle="modal" data-target=".modal-pdetails" @click="showPaymentDetails({{$match->id}})" class="btn btn-primary">Confirm Payment</button></td>
+<td v-else=>Confirmed</td>
+@elseif($match->cannot_pay)
+<td>Cannot Pay</td>
 @elseif($match->confirmed_on === NULL)
 <td>Pending</td>
 @endif
@@ -72,5 +75,130 @@
 @endif
 					<P style="font-family:georgia,garamond,serif;"></P></div></div>
 
+
+
+@include('components.userdetails')
+@include('components.paymentdetails')
+
+
+<userdetails :details="details"></userdetails>
+<paymentdetails :payment="pdetails"></paymentdetails>
 </section>
+@endsection
+
+
+@section('script')
+<script>
+Vue.prototype.$http = axios;
+Vue.component('paymentdetails', {
+  template: '#paymentdetails-template',
+  props: ['payment']
+});
+
+Vue.component('userdetails', {
+  template: '#userdetails-template',
+  props: ['details']
+});
+
+
+
+new Vue({
+el: '#app',
+
+data() {
+    return{
+        oyashow: false,
+        details: '',
+        matchId: '',
+        pdetails: {
+            confirmed: false,
+            url: '',
+            type: '',
+            name: '',
+            confirm: this.confirmPayment,
+            id: '',
+
+        },       
+        
+    
+    }
+    
+  },
+  methods:  {
+
+    setMatch: function(id){
+        this.matchId = id;
+    },
+
+    userdetails: function(id){
+            var self = this;
+            var data = {
+                userid: id
+            };
+            
+        this.$http.post('userdetails', data).then(function(response) {
+                // form submission successful, reset post data and set submitted to true
+                //this.payment.errors = [];
+                self.details = response.data;
+            }, function (response) {
+                // form submission failed, pass form  errors to errors array
+                console.log(response);
+            });
+
+    },
+
+    showPaymentDetails: function(id){
+            var self = this;
+            var data = {
+                matchId: id
+            }
+            
+        this.$http.post('paymentdetails', data).then(function(response) {
+                // form submission successful, reset post data and set submitted to true
+                //this.payment.errors = [];
+                self.pdetails.name = response.data.payment_name;
+                self.pdetails.type = response.data.payment_type;
+                self.pdetails.url = 'images/uploads/' + response.data.url;
+                self.pdetails.id = response.data.id;
+
+            }, function (response) {
+                // form submission failed, pass form  errors to errors array
+                console.log(response);
+            });
+
+    },
+
+    confirmPayment: function(){
+            var self = this;
+            var data = {
+                matchId: self.pdetails.id,
+                token: document.querySelector('#csrf-token').getAttribute('value'),
+            }
+           if(confirm('This process is irreversible, are you sure you want to continue')){
+                this.$http.post('confirmpayment', data).then(function(response) {
+                // form submission successful, reset post data and set submitted to true
+                //this.payment.errors = [];
+                self.pdetails.confirmed = true;
+            }, function (response) {
+                // form submission failed, pass form  errors to errors array
+                console.log(response);
+            });
+           }else{
+                console.log('didnt continue');
+           } 
+        
+
+    }
+         /*   //var post = this.post;
+            this.processing = true;
+            
+            console.log('this is the token: ' + csrfToken);
+            
+    }*/
+  },
+  
+
+ });
+
+</script>
 @endsection

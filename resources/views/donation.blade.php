@@ -49,7 +49,7 @@
 
 
 @if($match->url === NULL)
-<td v-if="!payment.updated"> <button class="button button-red button-xlarge button-rounded" data-toggle="modal" data-target=".modal-cant">I CANNOT MAKE PAYMENT</button> </td>
+<td v-if="!payment.updated"> <button class="button button-red button-xlarge button-rounded" data-toggle="modal" @click="setMatch({{$match->id}})" data-target=".modal-cant">I CANNOT MAKE PAYMENT</button> </td>
 <td v-else> - </td>
 @else
 <td> - </td>
@@ -68,11 +68,12 @@ YOU HAVE NOT BEEN MATCHED TO ANYONE</h2>
 </div>
 @endif
 					<P style="font-family:georgia,garamond,serif;"></P></div></div>
-@include('component')
+@include('components.payment')
+@include('components.userdetails')
 
 
 <uploadpayment :payment="payment"></uploadpayment>
-<nopayment></nopayment>
+<nopayment :data="nopayment_data"></nopayment>
 <userdetails :details="details"></userdetails>
 </section>
 @endsection
@@ -86,15 +87,15 @@ Vue.component('uploadpayment', {
   props: ['payment']
 });
 
-Vue.component('nopayment', {
-  template: '#nopayment-template',
-  props: ['payment']
-});
-
-
 Vue.component('userdetails', {
   template: '#userdetails-template',
   props: ['details']
+});
+
+
+Vue.component('nopayment', {
+  template: '#nopayment-template',
+  props: ['data']
 });
 
 
@@ -106,6 +107,7 @@ data() {
     return{
         oyashow: false,
         details: '',
+        matchId: '',
         
         payment: {
             type: '',
@@ -120,6 +122,12 @@ data() {
             errors: [], // array to hold form errors
 
         },
+
+        nopayment_data: {
+            deleted: false,
+            
+            cantpay: this.cantPay,
+        },
         
         
     
@@ -130,6 +138,9 @@ data() {
 
     setData: function(id){
         this.payment.matchId = id;
+    },
+    setMatch: function(id){
+        this.matchId = id;
     },
 
         fileSelected: function(e) {
@@ -199,6 +210,20 @@ data() {
                 console.log(response);
             });
 
+    },
+    cantPay: function(event){
+
+        var self = this;
+        
+
+
+        this.$http.post('cantpay', {matchId: this.matchId}).then(function(response) {
+                // form submission successful, reset post data and set submitted to true
+                self.nopayment_data.deleted = true;
+            }, function (response) {
+                // form submission failed, pass form  errors to errors array
+                console.log(response);
+            });
     }
          /*   //var post = this.post;
             this.processing = true;

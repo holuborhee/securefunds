@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use App\Match;
+use App\Deal;
 use Illuminate\Support\Facades\Storage;
 
 class HomeController extends Controller
@@ -64,13 +65,6 @@ class HomeController extends Controller
             Storage::deleteDirectory('payments/'.$request->matchId); //delete directory if exists
             $mime = $this->getFileMIMEType($file); //get mime type of file
             
-            /*if($this->mimeToType($mime) === "jpeg")
-                $path = 'payments/'.$request->matchId . "/" . $this->generateUniquename() . ".jpg";
-            elseif($this->mimeToType($mime) === "png")
-                $path = 'payments/'.$request->matchId . "/" . $this->generateUniquename() . ".png";
-            elseif($this->mimeToType($mime) === "gif")
-                $path = 'payments/'.$request->matchId . "/" . $this->generateUniquename() . ".gif";*/
-            
             $path = 'payments/'.$request->matchId . "/" . $this->generateUniquename() . ".". $this->mimeToType($mime); //create a path and file name
 
             $uploaded = Storage::put($path, file_get_contents($file));
@@ -78,8 +72,6 @@ class HomeController extends Controller
             if($uploaded){
 
                 $match = Match::findOrFail($request->matchId);
-        //}else
-          //  return response()->json(['success'=>$request->name,'su'=>$request->file], 200);
 
             $match->payment_type = $request->type;
             $match->payment_name = $request->name;
@@ -144,6 +136,65 @@ class HomeController extends Controller
 
     public function getUserdetails(Request $request){
         return response()->json(User::findOrFail($request->userid), 200); 
+    }
+
+
+
+
+    public function performUserCantPay(Request $request){
+        $match = Match::findOrFail($request->matchId);
+        $deal = Deal::findOrFail($match->deal_id);
+
+        $match->cannot_pay = 1;
+        $match->save();
+        
+        $user = User::where('category_id',$deal->category_id)->orderBy('request_on')->get();
+        
+        if($user->count())
+        {
+            $user = $user->first();
+            $match = Match::doMatching($user->category_id,$user->id);
+            if($match){
+                $user->category_id = NULL;
+                $user->request_on = NULL;
+            }
+        }
+          
+        $user = Auth()->user();
+
+        $user->delete();
+    }
+
+
+    public function getPaymentDetails(Request $request){
+            return response()->json(Match::findOrFail($request->matchId), 200);
+    }
+
+    public function confirmPayment(Request $request){
+            $match = Match::findOrFail($request->matchId);
+            if($match->url !== NULL){
+                $match->confirmed_on = $match->freshTimestamp();
+                $match->save();
+
+                $user = User::findOrFail($match->user_id);
+                $user->deals()->create(['category_id'=>$match->deal->category_id]);
+
+                $deal = Deal::findOrFail($match->deal_id);
+                //$matches = $deal->matches()->where('match_id', '!=', $match->id)->get();
+                //if($matches->count())
+                //{
+                    foreach($deal->matches() as $m){
+                        if($m->confirmed_on !== NULL AND $m->id !== $match->id)
+                        {
+                            $m->deal->closed_on = $m->freshTimestamp();
+                            $m->save();
+                            break;
+                        }
+                   // }
+                }
+            }
+            
+
     }
 
     public function insertUsers()

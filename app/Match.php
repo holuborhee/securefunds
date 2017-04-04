@@ -36,13 +36,18 @@ class Match extends Model
         return $d;
     }
 
+    public function getCannotPayAttribute($value){
+        if($value === 1)
+            return true;
+    }
+
 
 	/**
      * Get the user that owns the match.
      */
 	public function user()
     {
-        return $this->belongsTo('App\User');
+        return $this->belongsTo('App\User')->withTrashed();
     }
 
     /**

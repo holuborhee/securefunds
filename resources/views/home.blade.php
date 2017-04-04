@@ -54,7 +54,7 @@ PAY BEFORE THIS TIME TO ENJOY DONATIONS
 
 <button class="button button-xlarge button-rounded" data-toggle="modal" data-target=".modal-payment" @click="setData({{$match->id}})" class="btn btn-primary">MADE PAYMENT</button>
 
-<button class="button button-red button-xlarge button-rounded" data-toggle="modal" data-target=".modal-cant">I CANNOT MAKE PAYMENT</button>
+<button class="button button-red button-xlarge button-rounded" @click="setMatch({{$match->id}})" data-toggle="modal" data-target=".modal-cant">I CANNOT MAKE PAYMENT</button>
 
 </div>
 
@@ -96,11 +96,11 @@ You have no waiting transaction or donation, Click button to recycle
 
 @endif
 </div></div>
-@include('component')
+@include('components.payment')
 
 
 <uploadpayment :payment="payment"></uploadpayment>
-<nopayment></nopayment>
+<nopayment :data="nopayment_data"></nopayment>
 </section>
 @endsection
 
@@ -114,12 +114,7 @@ Vue.component('uploadpayment', {
 
 Vue.component('nopayment', {
   template: '#nopayment-template',
-  props: ['payment']
-});
-
-Vue.component('userdetails', {
-  template: '#userdetails-template',
-  props: ['details']
+  props: ['data']
 });
 
 
@@ -130,7 +125,7 @@ el: '#app',
 data() {
     return{
         oyashow: false,
-        details: '',
+        matchId: '',
         
         payment: {
             type: '',
@@ -145,19 +140,13 @@ data() {
             errors: [], // array to hold form errors
 
         },
-        /*post: {
-            first_name: '',
-            last_name: '',
-            email: '',
-            phone: '',
-            bank_name: '',
-            acc_name: '',
-            acc_number: '',
-            password: '',
-            password_confirmation: '',
-            category: '',
-            _token: document.querySelector('#csrf-token').getAttribute('value'),
-        },*/
+
+        nopayment_data: {
+            deleted: false,
+            
+            cantpay: this.cantPay,
+        },
+        
         
         
     
@@ -168,6 +157,10 @@ data() {
 
     setData: function(id){
         this.payment.matchId = id;
+    },
+
+    setMatch: function(id){
+        this.matchId = id;
     },
 
         fileSelected: function(e) {
@@ -187,10 +180,6 @@ data() {
                 };
                 reader.readAsDataURL(file);
             },
-    cancelPayment: function(event){
-       // send a post request to cancelpayment url
-       // and print out result to user
-    },
     submitPayment: function(event) {
         this.payment.processing = true;
         var self = this;
@@ -220,6 +209,21 @@ data() {
                 self.payment.errors = [];
                 self.payment.errors = response.data;
             });  
+    },
+
+    cantPay: function(event){
+
+        var self = this;
+        
+
+
+        this.$http.post('cantpay', {matchId: this.matchId}).then(function(response) {
+                // form submission successful, reset post data and set submitted to true
+                self.nopayment_data.deleted = true;
+            }, function (response) {
+                // form submission failed, pass form  errors to errors array
+                console.log(response);
+            });
     }
          /*   //var post = this.post;
             this.processing = true;
