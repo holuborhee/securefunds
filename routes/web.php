@@ -37,3 +37,5 @@ Route::post('/cantpay', 'HomeController@performUserCantPay');
 Route::post('/paymentdetails', 'HomeController@getPaymentDetails');
 
 Route::post('/confirmpayment', 'HomeController@confirmPayment');
+Route::get('/allcategories', 'HomeController@getAllCategories');
+Route::post('/recycle', 'HomeController@performRecycle');

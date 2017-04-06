@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Deal extends Model
 {
     //
-	protected $guarded = [];
+	protected $fillable = ['user_id', 'category_id'];
 	public $timestamps = false;
 	public static function boot()
     {

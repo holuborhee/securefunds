@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Match;
 use App\Deal;
+use App\Category;
 use Illuminate\Support\Facades\Storage;
 
 class HomeController extends Controller
@@ -183,18 +184,35 @@ class HomeController extends Controller
                 //$matches = $deal->matches()->where('match_id', '!=', $match->id)->get();
                 //if($matches->count())
                 //{
-                    foreach($deal->matches() as $m){
-                        if($m->confirmed_on !== NULL AND $m->id !== $match->id)
-                        {
-                            $m->deal->closed_on = $m->freshTimestamp();
-                            $m->save();
+                    foreach($deal->matches()->whereNotNull('confirmed_on')->where('id','!=',$request->matchId)->cursor() as $m){
+                        
+                            $deal->closed_on = $m->freshTimestamp();
+                            $deal->save();
                             break;
-                        }
-                   // }
+                       
+                   
                 }
             }
             
 
+    }
+
+
+    public function getAllCategories(){
+        return Category::all();
+    }
+
+
+    public function performRecycle(Request $request){
+        $user = Auth()->user();
+        //return response()->json(['cat'=>$request->catId,'user'=>$user->id], 200);
+        $match = Match::doMatching($request->catId,$user->id);
+
+        if(!$match){
+            $user->category_id = $request->catId;
+            $user->request_on = $user->freshTimestamp();
+            $user->save();
+        }
     }
 
     public function insertUsers()

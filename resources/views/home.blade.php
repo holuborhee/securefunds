@@ -88,9 +88,22 @@ You are to recieve donation, <a href="{{url('/transactions')}}">click to go to t
 
 @elseif(!Auth::user()->isActiveTransactionOrDonation())
 <div class="jumbotron">
-<p>
-You have no waiting transaction or donation, Click button to recycle
+<p v-if="!recycling">
+You have no waiting transaction or donation, <button @click="loadRecycle">Click to recycle</button>
 </p>
+<p v-else-if="recycled">
+Recycled, your request for matching has been accepted <a href="{{url('/donations')}}">Click here to check if you have been matched</a>
+</p>
+<div v-else-if="recycling">
+<h2>Select A Category</h2>
+<select id="category" class="form-control input-lg" v-model="selectedCategory" required  name="category">
+<option disabled value="">Please Select A Category</option>
+    <option v-for="category in categories" :value="category.id">@{{category.name}} - <b>@{{category.amount}} ₦</b></option>
+
+</select>
+<br />
+<button class="btn btn-primary" @click="performRecycle">Submit</button>
+</div>
 </div>
 
 
@@ -126,6 +139,10 @@ data() {
     return{
         oyashow: false,
         matchId: '',
+        recycling: false,
+        recycled: false,
+        categories: '',
+        selectedCategory: '',
         
         payment: {
             type: '',
@@ -220,6 +237,36 @@ data() {
         this.$http.post('cantpay', {matchId: this.matchId}).then(function(response) {
                 // form submission successful, reset post data and set submitted to true
                 self.nopayment_data.deleted = true;
+            }, function (response) {
+                // form submission failed, pass form  errors to errors array
+                console.log(response);
+            });
+    },
+
+    performRecycle: function(event){
+
+        var self = this;
+
+        this.$http.post('recycle', {catId: this.selectedCategory}).then(function(response) {
+                // form submission successful, reset post data and set submitted to true
+                self.recycled = true;
+                console.log('cat: ' + response.data.cat + ', user: ' + response.data.user);
+            }, function (response) {
+                // form submission failed, pass form  errors to errors array
+                console.log(response);
+            });
+    },
+
+    loadRecycle: function(event){
+
+        var self = this;
+        
+
+
+        this.$http.get('allcategories').then(function(response) {
+                // form submission successful, reset post data and set submitted to true
+                self.categories = response.data;
+                self.recycling = true;
             }, function (response) {
                 // form submission failed, pass form  errors to errors array
                 console.log(response);
